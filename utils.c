@@ -87,7 +87,7 @@ int is_sorted(t_stack *stack)
 		return (1);
 	while(stack->next)
 	{
-		if ((stack->value) > (stack->next->value))
+		if ((stack->index) > (stack->next->index))
 			return (0);
 		stack = stack->next;
 	}

@@ -12,54 +12,53 @@
 
 #include "push_swap.h"
 
-void	move(t_stack **a, t_stack **b, t_stack *node)
+void move(t_stack **a, t_stack **b, t_stack *node)
 {
-	while (node->cost_a > 0 && node->cost_b > 0)
-	{
-		rr(a, b); // hem ra hem rb
-		node->cost_a--;
-		node->cost_b--;
-	}
-	while (node->cost_a < 0 && node->cost_b < 0)
-	{
-		rrr(a, b); // hem rra hem rrb
-		node->cost_a++;
-		node->cost_b++;
-	}
-	while (node->cost_a > 0)
-	{
-		ra(a);
-		node->cost_a--;
-	}
-	while (node->cost_a < 0)
-	{
-		rra(a);
-		node->cost_a++;
-	}
-	while (node->cost_b > 0)
-	{
-		rb(b);
-		node->cost_b--;
-	}
-	while (node->cost_b < 0)
-	{
-		rrb(b);
-		node->cost_b++;
-	}
-	pa(a, b);
-}
+    if (!a || !b || !node)
+        return;
 
-void	push_all_to_a(t_stack **a, t_stack **b)
-{
-	t_stack *lowest;
+    // Hem A hem B pozitifse birlikte döndür
+    while (node->cost_a > 0 && node->cost_b > 0)
+    {
+        rr(a, b);
+        node->cost_a--;
+        node->cost_b--;
+    }
 
-	while (*b)
-	{
-        calculate_cost(*a,*b); //b deki tüm elemanlar için maliyet hesapla
-        lowest = cheapest_action(*b);
-        move (a,b,lowest);
-	}
-    sort_stack_a(a);
+    // Hem A hem B negatifse birlikte ters döndür
+    while (node->cost_a < 0 && node->cost_b < 0)
+    {
+        rrr(a, b);
+        node->cost_a++;
+        node->cost_b++;
+    }
+
+    // A stack'i sola/döne döndür
+    while (node->cost_a > 0)
+    {
+        ra(a);
+        node->cost_a--;
+    }
+    while (node->cost_a < 0)
+    {
+        rra(a);
+        node->cost_a++;
+    }
+
+    // B stack'i sola/döne döndür
+    while (node->cost_b > 0)
+    {
+        rb(b);
+        node->cost_b--;
+    }
+    while (node->cost_b < 0)
+    {
+        rrb(b);
+        node->cost_b++;
+    }
+
+    // Son olarak node'u B'den A'ya taşı
+    pa(a, b);
 }
 
 void sort_stack_a(t_stack **a)

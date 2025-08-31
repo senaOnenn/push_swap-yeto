@@ -12,71 +12,68 @@
 
 #include "push_swap.h"
 
-int	stack_size(t_stack *stack)
+int stack_size(t_stack *stack)
 {
-	int	count;
-
-	count = 0;
-	while (stack)
-	{
-		count++;
-		stack = stack->next;
-	}
-	return (count);
-}
-
-void	set_index(t_stack *a, int size)
-{
-	t_stack	*current;
-	int		i;
-
-	(void)size;
-	while (a)
-	{
-		i = 0;
-		current = a;
-		while (current)
-		{
-			if (a->value > current->value)
-				i++;
-			current = current->next;
-		}
-		a->index = i;
-		a = a->next;
-	}
+    int count = 0;
+    while (stack)
+    {
+        count++;
+        stack = stack->next;
+    }
+    return count;
 }
 
 
-int	find_min_index(t_stack *stack)
+void set_index(t_stack *a)
 {
-	int	min;
+    if (!a)
+        return;
 
-	if (!stack)
-		return (-1);
-	min = stack->index;
-	while (stack)
-	{
-		if (stack->index < min)
-			min = stack->index;
-		stack = stack->next;
-	}
-	return (min);
+    t_stack *current = a;
+    t_stack *tmp;
+    int idx;
+
+    while (current)
+    {
+        idx = 0;
+        tmp = a;
+        while (tmp)
+        {
+            if (current->value > tmp->value)
+                idx++;
+            tmp = tmp->next;
+        }
+        current->index = idx;
+        current = current->next;
+    }
 }
 
-int	find_max_index(t_stack *stack)
+int find_min_index(t_stack *stack)
 {
-	int	max;
+    if (!stack)
+        return -1;
+    int min = stack->index;
+    while (stack)
+    {
+        if (stack->index < min)
+            min = stack->index;
+        stack = stack->next;
+    }
+    return min;
+}
 
-	if (!stack)
-		return (-1);
-	max = stack->index;
-	while (stack)
-	{
-		if (stack->index > max)
-			max = stack->index;
-		stack = stack->next;
-	}
-	return (max);
+int find_max_index(t_stack *stack)
+{
+    if (!stack)
+        return -1;
+    int max = stack->index;
+    while (stack)
+    {
+        if (stack->index > max)
+            max = stack->index;
+        stack = stack->next;
+    }
+    return max;
 }
 
 int	find_position(t_stack *stack, int index)

@@ -14,14 +14,16 @@
 
 t_stack *new_node(long value)
 {
-    t_stack *node;
-
-    node = malloc(sizeof(t_stack));
-    if(!node)
-        return (NULL);
+    t_stack *node = malloc(sizeof(t_stack));
+    if (!node)
+        return NULL;
     node->value = value;
+    node->index = 0;
+    node->cost_a = 0;
+    node->cost_b = 0;
+    node->total_cost = 0;
     node->next = NULL;
-    return(node);
+    return node;
 }
 
 void add_back(t_stack **stack_a, t_stack *node)
